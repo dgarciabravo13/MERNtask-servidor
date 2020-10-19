@@ -36,7 +36,7 @@ exports.obtenerProyectos = async (req, res) => {
   }
 };
 
-//Actualiza un proyecto
+//Actualiza un proyecto por su id
 
 exports.actualizarProyecto = async (req, res) => {
   //revisar si existen errores
@@ -75,9 +75,40 @@ exports.actualizarProyecto = async (req, res) => {
     );
 
     res.json({ proyecto });
-    
+
   } catch (error) {
     console.log(error);
     res.status(500).send("Error en el servidor");
   }
 };
+
+//Eliminar un proyecto por su id
+
+exports.eliminarProyecto = async (req, res) => {
+
+  try {
+    //revisar el id
+    let proyecto = await Proyecto.findById(req.params.id);
+
+    //si existe el proyecto o no
+    if (!proyecto) {
+      return res.status(404).json({ msg: "Proyecto no encontrado" });
+    }
+
+    //verificar el creador del proyecto
+    if (proyecto.creador.toString() !== req.usuario.id) {
+      return res.status(401).json({ msg: "No autorizado" });
+    }
+
+    //eliminar proyecto
+    proyecto = await Proyecto.findOneAndRemove({ _id: req.params.id });
+
+    res.json("Proyecto Eliminado");
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error en el servidor");
+  }
+};
+
+
