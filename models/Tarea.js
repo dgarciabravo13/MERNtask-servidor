@@ -20,4 +20,4 @@ const TareaSchema = mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("Tarea", ProyectoSchema);
+module.exports = mongoose.model("Tarea", TareaSchema);
