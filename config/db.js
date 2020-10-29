@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+mongoose.set('useCreateIndex', true);
 require("dotenv").config();
 
 const conectarDB = async () => {
@@ -8,6 +9,7 @@ const conectarDB = async () => {
       useUnifiedTopology: true,
       useFindAndModify: false
     });
+    
     console.log("DB Conectada");
   } catch(error){
     console.log(error);
