@@ -22,4 +22,9 @@ auth,
 tareaController.obtenerTareas
 );
 
+router.put("/:id",
+auth,
+tareaController.actualizarTarea
+);
+
 module.exports = router;
