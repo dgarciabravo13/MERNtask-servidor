@@ -46,7 +46,7 @@ exports.obtenerTareas = async (req, res) => {
     if (existeProyecto.creador.toString() !== req.usuario.id) {
       return res.status(401).json({ msg: "No autorizado" });
     }
-    const tareas = await Tarea.find({ proyecto }).sort({creado:-1});
+    const tareas = await Tarea.find({ proyecto }).sort({ creado: -1 });
     res.json({ tareas });
   } catch (error) {
     console.log(error);
@@ -76,12 +76,8 @@ exports.actualizarTarea = async (req, res) => {
 
     //Crear un objeto con la nueva tarea actualizada
     const nuevaTarea = {};
-    if (nombre) {
-      nuevaTarea.nombre = nombre;
-    }
-    if (estado) {
-      nuevaTarea.estado = estado;
-    }
+    nuevaTarea.nombre = nombre;
+    nuevaTarea.estado = estado;
 
     //Guardar la tarea
     tarea = await Tarea.findOneAndUpdate({ _id: req.params.id }, nuevaTarea, {
